@@ -27,7 +27,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           projectName: your-cloudflare-project-name
