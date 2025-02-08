@@ -1,0 +1,61 @@
+name: Deploy Frontends
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-frontend1:
+    name: Deploy Frontend1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Dependencies for Frontend1
+        working-directory: ./frontend1
+        run: npm install
+
+      - name: Build Frontend1
+        working-directory: ./frontend1
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages (Frontend1)
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          projectName: your-cloudflare-project-name-1
+          directory: ./frontend1/.next
+
+  deploy-frontend2:
+    name: Deploy Frontend2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Dependencies for Frontend2
+        working-directory: ./frontend2
+        run: npm install
+
+      - name: Build Frontend2
+        working-directory: ./frontend2
+        run: npm run build
+      - name: Deploy to Cloudflare Pages (Frontend2)
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          projectName: your-cloudflare-project-name-2
+          directory: ./frontend2/.next
+          directory: ./frontend2/.next
