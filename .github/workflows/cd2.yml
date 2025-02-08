@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-frontend1:
-    name: Build and Deploy Frontend1
+    name: Build and Deploy Frontend3
     runs-on: ubuntu-latest
     defaults:
       run:
