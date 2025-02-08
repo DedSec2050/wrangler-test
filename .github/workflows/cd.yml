@@ -9,6 +9,9 @@ jobs:
   build-frontend1:
     name: Build and Deploy Frontend1
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend1
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -19,17 +22,10 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        working-directory: ./frontend1
         run: npm install
 
-      - name: Build Project
-        working-directory: ./frontend1
-        run: npm run build
-
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          projectName: your-cloudflare-project-name
-          directory: ./frontend1/.next
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy
