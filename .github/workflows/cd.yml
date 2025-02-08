@@ -3,34 +3,32 @@ name: Deploy Frontends
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  deploy:
-    name: Build and Deploy Both Frontends
+  build-frontend1:
+    name: Build and Deploy Frontend1
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Build Frontend1
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Dependencies
+        working-directory: ./frontend1
+        run: npm install
+
+      - name: Build Project
         working-directory: ./frontend1
         run: npm run build
 
-      # - name: Build Frontend2
-      #   working-directory: ./frontend2
-      #   run: npm run build
-
-      - name: Deploy Frontend1
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          projectName: your-cloudflare-project-1
+          projectName: your-cloudflare-project-name
           directory: ./frontend1/.next
-
-      # - name: Deploy Frontend2
-      #   uses: cloudflare/pages-action@v1
-      #   with:
-      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      #     projectName: your-cloudflare-project-2
-      #     directory: ./frontend2/.next
