@@ -17,9 +17,9 @@ jobs:
         working-directory: ./frontend1
         run: npm run build
 
-      - name: Build Frontend2
-        working-directory: ./frontend2
-        run: npm run build
+      # - name: Build Frontend2
+      #   working-directory: ./frontend2
+      #   run: npm run build
 
       - name: Deploy Frontend1
         uses: cloudflare/pages-action@v1
@@ -28,9 +28,9 @@ jobs:
           projectName: your-cloudflare-project-1
           directory: ./frontend1/.next
 
-      - name: Deploy Frontend2
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          projectName: your-cloudflare-project-2
-          directory: ./frontend2/.next
+      # - name: Deploy Frontend2
+      #   uses: cloudflare/pages-action@v1
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     projectName: your-cloudflare-project-2
+      #     directory: ./frontend2/.next
