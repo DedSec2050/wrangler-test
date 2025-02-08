@@ -1,0 +1,31 @@
+name: Deploy Frontends
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-frontend1:
+    name: Build and Deploy Frontend1
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend3
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy
